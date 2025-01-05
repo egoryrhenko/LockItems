@@ -15,4 +15,4 @@ attempt_craft_locked_item: "&cThis item is locked by {Player}"
 item_lore: "&7Locked by {Player}"
 
 reload_config: "&aConfig reloaded!"
-command_sender_not_player: "This command is for players"
+command_sender_not_player: "This command is for players!"

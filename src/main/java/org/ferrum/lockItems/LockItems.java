@@ -1,7 +1,5 @@
 package org.ferrum.lockItems;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -27,6 +25,8 @@ public final class LockItems extends JavaPlugin {
     public void onEnable() {
 
         configManager = new ConfigManager(this);
+        ReloadCommand reloadCommand = new ReloadCommand(configManager);
+
         LockCommand lockCommand = new LockCommand(this);
         UnLockCommand unLockCommand = new UnLockCommand(this);
         ForceUnLockCommand forceUnLockCommand = new ForceUnLockCommand(this);
@@ -38,8 +38,8 @@ public final class LockItems extends JavaPlugin {
 
         RegisterCommand("lock", lockCommand, emptyTabCompleter,"lockitems.lock");
         RegisterCommand("unlock", unLockCommand, emptyTabCompleter,"lockitems.unlock");
-        RegisterCommand("forceunlock", forceUnLockCommand, emptyTabCompleter,"lockitems.admin.unlock");
-        RegisterCommand("lockitemsreload",new ReloadCommand(configManager),null,"lockitems.reload");
+        RegisterCommand("forceunlock", forceUnLockCommand, emptyTabCompleter,"lockitems.unlock.admin");
+        RegisterCommand("lockitemsreload", reloadCommand, emptyTabCompleter,"lockitems.reload");
     }
 
     private void RegisterCommand(String name, CommandExecutor commandExecutor, TabCompleter tabCompleter, String permission ){

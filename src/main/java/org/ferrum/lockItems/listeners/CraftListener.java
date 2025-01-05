@@ -39,12 +39,12 @@ public class CraftListener implements Listener {
     public void onItemCraft(CraftItemEvent event) {
         for (ItemStack item : event.getInventory().getMatrix()) {
             if (item != null && plugin.LockableItems.contains(item.getType())) {
-                UUID uuidOwner = DataManager.getDataFromItem(item,plugin);
-                if (uuidOwner == null) {return;}
+                UUID uuidOwner = DataManager.getDataFromItem(item, plugin);
+                if (uuidOwner == null) { return; }
                 Player owner = Bukkit.getPlayer(uuidOwner);
                 if (!Objects.equals(uuidOwner, event.getWhoClicked().getUniqueId())) {
                     event.setCancelled(true);
-                    event.getWhoClicked().sendMessage(configManager.getStringByKey("attempt_craft_loked_item", owner));
+                    event.getWhoClicked().sendMessage(configManager.getStringByKey("attempt_craft_locked_item", owner));
                 }
             }
         }
@@ -62,7 +62,7 @@ public class CraftListener implements Listener {
                 Player owner = Bukkit.getPlayer(uuidOwner);
                 if (!Objects.equals(uuidOwner, event.getWhoClicked().getUniqueId())) {
                     event.setCancelled(true);
-                    event.getWhoClicked().sendMessage(configManager.getStringByKey("attempt_craft_loked_item", owner));
+                    event.getWhoClicked().sendMessage(configManager.getStringByKey("attempt_craft_locked_item", owner));
                 }
             }
         }

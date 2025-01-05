@@ -1,5 +1,18 @@
+item_successfully_locked: "&aItem in hand has been locked"
+item_already_locked: "&cThe item is already locked!"
+attempt_lock_empty_hand: "&cYou must hold an item in your hand"
+attempt_lock_item_not_in_list: "&cYou cannot lock this item"
 
-item_successfully_locked: test
-item_already_locked: test
-attempt_lock_empty_hand: test
-attempt_lock_item_not_in_list: test # :)
+item_successfully_unlocked: "&aItem in hand has been unlocked"
+item_not_locked: "&cItem not locked"
+attempt_unlock_empty_hand: "&cYou must hold an item in your hand"
+attempt_unlock_item_not_in_list: "&cItem not locked"
+
+attempt_unlock_item_not_owner: "&cYou cannot unlock an item that is locked by someone else" # :)
+
+attempt_craft_locked_item: "&cThis item is locked by {Player}"
+
+item_lore: "&7Locked by {Player}"
+
+reload_config: "&aConfig reloaded!"
+command_sender_not_player: "This command is for players"

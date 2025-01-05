@@ -1,0 +1,5 @@
+
+item_successfully_locked: test
+item_already_locked: test
+attempt_lock_empty_hand: test
+attempt_lock_item_not_in_list: test # :)

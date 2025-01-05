@@ -1,0 +1,26 @@
+name: LockItems
+version: '1.0'
+main: org.ferrum.lockItems.LockItems
+api-version: '1.18'
+softdepend: [PlaceholderAPI]
+
+permissions:
+  lockitems.lock:
+    default: true
+  lockitems.unlock:
+    default: true
+  lockitems.unlock.admin:
+    default: op
+  lockitems.reload:
+    default: op
+
+
+commands:
+  lock:
+    description: Lock item in hand
+  unlock:
+    description: unLock item in hand
+  forceunlock:
+    description: unLock item in hand
+  lockitemsreload:
+    description: Reload plugin

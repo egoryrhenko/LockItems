@@ -26,7 +26,7 @@ import java.util.*;
 public class CraftListener implements Listener {
 
 
-    private LockItems plugin;
+    private final LockItems plugin;
     private final ConfigManager configManager;
 
     public CraftListener(LockItems plugin) {

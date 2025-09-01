@@ -32,6 +32,7 @@ public final class LockItems extends JavaPlugin {
         lock_owner = new NamespacedKey(this, "lock_owner");
         lock_text = new NamespacedKey(this, "lock_text");
 
+        ConfigManager.init();
         ReloadCommand reloadCommand = new ReloadCommand();
 
         LockCommand lockCommand = new LockCommand();

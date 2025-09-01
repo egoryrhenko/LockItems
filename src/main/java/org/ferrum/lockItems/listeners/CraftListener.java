@@ -36,7 +36,7 @@ public class CraftListener implements Listener {
 
         for (ItemStack item : event.getInventory().getMatrix()) {
             if (item != null && LockItems.LockableItems.contains(item.getType())) {
-                if (DataManager.hasDataFromItem(item, LockItems.lock_owner) && DataManager.getDataFromItem(item, LockItems.lock_owner).equals(event.getWhoClicked().getUniqueId().toString())) {
+                if (DataManager.hasDataFromItem(item, LockItems.lock_owner) && (!DataManager.getDataFromItem(item, LockItems.lock_owner).equals(event.getWhoClicked().getUniqueId().toString()))) {
                     event.setCancelled(true);
                     event.getWhoClicked().sendMessage(ConfigManager.getStringByKey("attempt_craft_locked_item", Bukkit.getOfflinePlayer(DataManager.getDataFromItem(item, LockItems.lock_owner))));
                 }

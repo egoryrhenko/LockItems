@@ -20,6 +20,7 @@ public class DataManager {
         }
 
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, data);
+        item.setItemMeta(meta);
     }
 
     static public String getDataFromItem(ItemStack item, NamespacedKey key) {
@@ -50,5 +51,6 @@ public class DataManager {
         }
 
         meta.getPersistentDataContainer().remove(key);
+        item.setItemMeta(meta);
     }
 }

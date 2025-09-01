@@ -64,6 +64,7 @@ public class UnLockCommand implements CommandExecutor {
             itemInHand.setItemMeta(meta);
 
             removeDataFromItem(itemInHand, LockItems.lock_owner);
+            removeDataFromItem(itemInHand, LockItems.lock_text);
 
             player.sendMessage(ConfigManager.getStringByKey("item_successfully_unlocked", player));
         } else {

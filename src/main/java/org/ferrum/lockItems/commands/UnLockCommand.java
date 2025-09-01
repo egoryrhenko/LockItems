@@ -18,13 +18,6 @@ import static org.ferrum.lockItems.utils.DataManager.*;
 
 public class UnLockCommand implements CommandExecutor {
 
-    private final LockItems plugin;
-    private final ConfigManager configManager;
-
-    public UnLockCommand(LockItems plugin){
-        this.plugin = plugin;
-        this.configManager = plugin.getConfigManager();
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -32,42 +25,50 @@ public class UnLockCommand implements CommandExecutor {
 
             ItemStack itemInHand = player.getInventory().getItemInMainHand();
 
-            if (plugin.LockableItems.contains(itemInHand.getType())) {
-
-                UUID uuidOwner = getDataFromItem(itemInHand,plugin);
-
-                if (uuidOwner == null){
-
-                    return true;
-                }
-
-                if (uuidOwner.equals(player.getUniqueId())){
-                    removeDataFromItem(itemInHand, plugin);
-
-                    ItemMeta meta = itemInHand.getItemMeta();
-                    List<String> lore = meta.getLore();
-
-                    String lockLore = configManager.getStringByKey("item_lore").replace("{Player}", player.getName());
-
-                    lore.remove(lockLore);
-
-                    meta.setLore(lore);
-                    itemInHand.setItemMeta(meta);
-
-                    player.sendMessage(configManager.getStringByKey("item_successfully_unlocked", player));
-                    return true;
-                } else {
-                    player.sendMessage(configManager.getStringByKey("attempt_unlock_item_not_owner", player));
-                    return true;
-                }
-            } else if (itemInHand.getType().isAir()){
-                player.sendMessage(configManager.getStringByKey("attempt_unlock_empty_hand", player));
-                return true;
-            } else {
-                player.sendMessage(configManager.getStringByKey("attempt_unlock_item_not_in_list", player));
+            if (itemInHand.getType().isAir()){
+                player.sendMessage(ConfigManager.getStringByKey("attempt_unlock_empty_hand", player));
                 return true;
             }
+
+            if (!LockItems.LockableItems.contains(itemInHand.getType())) {
+                player.sendMessage(ConfigManager.getStringByKey("attempt_unlock_item_not_in_list", player));
+                return true;
+            }
+
+            String uuidOwner = getDataFromItem(itemInHand, LockItems.lock_owner);
+
+            if (uuidOwner == null) {
+                player.sendMessage(ConfigManager.getStringByKey("item_not_locked", player));
+                return true;
+            }
+
+            if (!uuidOwner.equals(player.getUniqueId().toString())) {
+                player.sendMessage(ConfigManager.getStringByKey("attempt_unlock_item_not_owner", player));
+                return true;
+            }
+
+            ItemMeta meta = itemInHand.getItemMeta();
+            List<String> lore = meta.getLore();
+
+            if (lore == null) {
+                lore = new ArrayList<>();
+            }
+
+            if (hasDataFromItem(itemInHand, LockItems.lock_text)) {
+                lore.remove(getDataFromItem(itemInHand, LockItems.lock_text));
+            } else {
+                lore.remove(ConfigManager.getStringByKey("item_lore").replace("{Player}", player.getName()));
+            }
+
+            meta.setLore(lore);
+            itemInHand.setItemMeta(meta);
+
+            removeDataFromItem(itemInHand, LockItems.lock_owner);
+
+            player.sendMessage(ConfigManager.getStringByKey("item_successfully_unlocked", player));
+        } else {
+            sender.sendMessage(ConfigManager.getStringByKey("command_sender_not_player"));
         }
-        return false;
+        return true;
     }
 }

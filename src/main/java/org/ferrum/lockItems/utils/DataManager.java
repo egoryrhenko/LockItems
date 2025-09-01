@@ -1,78 +1,54 @@
 package org.ferrum.lockItems.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.ferrum.lockItems.LockItems;
 
-import java.nio.Buffer;
 import java.util.UUID;
 
 public class DataManager {
 
-     static public void addDataToItem(ItemStack item, UUID data, JavaPlugin plugin) {
+     static public void setDataToItem(ItemStack item, NamespacedKey key, String data) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) {
             return;
         }
 
-        PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-        NamespacedKey dataKey = new NamespacedKey(plugin, "lock_owner");
-
-        dataContainer.set(dataKey, PersistentDataType.STRING, data.toString());
-        item.setItemMeta(meta);
+        meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, data);
     }
 
-    static public UUID getDataFromItem(ItemStack item, JavaPlugin plugin) {
+    static public String getDataFromItem(ItemStack item, NamespacedKey key) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) {
             return null;
         }
 
-        PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-        NamespacedKey dataKey = new NamespacedKey(plugin, "lock_owner");
-
-        String data = dataContainer.getOrDefault(dataKey, PersistentDataType.STRING, "");
-
-        if (data.isEmpty()){
-            return null;
-        }
-        return UUID.fromString(data);
+        return meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
     }
 
-    static public boolean containsItemData(ItemStack item, JavaPlugin plugin) {
+    static public boolean hasDataFromItem(ItemStack item, NamespacedKey key) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) {
             return false;
         }
 
-        PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-        NamespacedKey dataKey = new NamespacedKey(plugin, "lock_owner");
-
-        String data = dataContainer.getOrDefault(dataKey, PersistentDataType.STRING, "");
-
-        return !data.isEmpty();
+        return meta.getPersistentDataContainer().has(key, PersistentDataType.STRING);
     }
 
-    static public void removeDataFromItem(ItemStack item, JavaPlugin plugin) {
+    static public void removeDataFromItem(ItemStack item, NamespacedKey key) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) {
             return;
         }
 
-        PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-        NamespacedKey dataKey = new NamespacedKey(plugin, "lock_owner");
-
-        // Удаляем данные по ключу
-        dataContainer.remove(dataKey);
-
-        item.setItemMeta(meta);
+        meta.getPersistentDataContainer().remove(key);
     }
 }

@@ -18,10 +18,10 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class ConfigManager {
-    private LockItems plugin;
-    private FileConfiguration config;
-    private FileConfiguration messages;
-    private boolean PlaceholderAPI_isLoad;
+    private static LockItems plugin;
+    private static FileConfiguration config;
+    private static FileConfiguration messages;
+    private static boolean PlaceholderAPI_isLoad;
 
     public ConfigManager(LockItems plugin) {
         this.plugin = plugin;
@@ -34,7 +34,7 @@ public class ConfigManager {
         }
     }
 
-    public void loadConfig() {
+    public static void loadConfig() {
         File configFile = new File(plugin.getDataFolder(), "config.yml");
         if (!configFile.exists()) {
             plugin.saveResource("config.yml", false);
@@ -54,7 +54,7 @@ public class ConfigManager {
         updateLockItems();
     }
 
-    public String getStringByKey(String key, Player player) {
+    public static String getStringByKey(String key, OfflinePlayer player) {
         String string = messages.getString(key, "text."+key);
         string = string.replace("{Player}", player.getName());
         if (PlaceholderAPI_isLoad) {
@@ -65,38 +65,28 @@ public class ConfigManager {
         return string;
     }
 
-    public String getStringByKey(String key) {
-        String string = messages.getString(key, "text."+key);
-        string = ChatColor.translateAlternateColorCodes('&', string);
-
-        return string;
+    public static String getStringByKey(String key) {
+        return ChatColor.translateAlternateColorCodes('&', messages.getString(key, "text."+key));
     }
 
 
 
-    public void updateLockItems() {
-        HashSet<Material> lockItems  = new HashSet<>();
-        List<?> LockItems = config.getList("ItemCanBeLock");
-        List<?> LockItemsTag = config.getList("ItemTagCanBeLock");
+    public static void updateLockItems() {
+        plugin.LockableItems.clear();
+        List<String> LockItems = config.getStringList("ItemCanBeLock");
+        List<String> LockItemsTag = config.getStringList("ItemTagCanBeLock");
 
-        if (LockItems != null) {
-            for (Object obj : LockItems) {
-                if (obj instanceof String lockItemName){
-                    lockItems.add( Material.getMaterial(lockItemName));
-                }
+        for (String material : LockItems) {
+            plugin.LockableItems.add( Material.getMaterial(material) );
+        }
+
+        for (String lockItemTagName : LockItemsTag) {
+            Tag<Material> itemsFoTag = Bukkit.getTag(Tag.REGISTRY_ITEMS, NamespacedKey.minecraft(lockItemTagName), Material.class);
+            if (itemsFoTag != null) {
+                plugin.LockableItems.addAll(itemsFoTag.getValues());
             }
         }
-        if (LockItemsTag != null) {
-            for (Object obj : LockItemsTag) {
-                if (obj instanceof String lockItemTagName){
-                    Tag<Material> itemsFoTag = Bukkit.getTag(Tag.REGISTRY_ITEMS, NamespacedKey.minecraft(lockItemTagName), Material.class);
-                    if (itemsFoTag  != null){
-                        lockItems.addAll(itemsFoTag.getValues());
-                    }
-                }
-            }
-        }
-        plugin.getLogger().log(Level.INFO, "Register "+lockItems.size()+" items");
-        plugin.LockableItems = lockItems;
+
+        plugin.getLogger().log(Level.INFO, "Register "+plugin.LockableItems.size()+" items");
     }
 }

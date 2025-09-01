@@ -31,27 +31,14 @@ import java.util.*;
 
 public class CraftListener implements Listener {
 
-
-    private final LockItems plugin;
-    private final ConfigManager configManager;
-
-    public CraftListener(LockItems plugin) {
-        this.plugin = plugin;
-        this.configManager = plugin.getConfigManager();
-    }
-
-
     @EventHandler
     public void onItemCraft(CraftItemEvent event) {
 
         for (ItemStack item : event.getInventory().getMatrix()) {
-            if (item != null && plugin.LockableItems.contains(item.getType())) {
-                UUID uuidOwner = DataManager.getDataFromItem(item, plugin);
-                if (uuidOwner == null) { return; }
-                Player owner = Bukkit.getPlayer(uuidOwner);
-                if (!Objects.equals(uuidOwner, event.getWhoClicked().getUniqueId())) {
+            if (item != null && LockItems.LockableItems.contains(item.getType())) {
+                if (DataManager.hasDataFromItem(item, LockItems.lock_owner) && DataManager.getDataFromItem(item, LockItems.lock_owner).equals(event.getWhoClicked().getUniqueId().toString())) {
                     event.setCancelled(true);
-                    event.getWhoClicked().sendMessage(configManager.getStringByKey("attempt_craft_locked_item", owner));
+                    event.getWhoClicked().sendMessage(ConfigManager.getStringByKey("attempt_craft_locked_item", Bukkit.getOfflinePlayer(DataManager.getDataFromItem(item, LockItems.lock_owner))));
                 }
             }
         }
@@ -64,8 +51,8 @@ public class CraftListener implements Listener {
         Inventory inventory = crafter.getInventory();
 
         for (ItemStack item : inventory) {
-            if (item != null && plugin.LockableItems.contains(item.getType())) {
-                if (DataManager.containsItemData(item, plugin)) {
+            if (item != null && LockItems.LockableItems.contains(item.getType())) {
+                if (DataManager.hasDataFromItem(item, LockItems.lock_owner)) {
                     event.setCancelled(true);
                     return;
                 }
@@ -81,13 +68,10 @@ public class CraftListener implements Listener {
 
         if (inv != null && inv.getType() == InventoryType.CARTOGRAPHY) {
             ItemStack item = event.getCurrentItem();
-            if (item != null && plugin.LockableItems.contains(item.getType())) {
-                UUID uuidOwner = DataManager.getDataFromItem(item,plugin);
-                if (uuidOwner == null) {return;}
-                Player owner = Bukkit.getPlayer(uuidOwner);
-                if (!Objects.equals(uuidOwner, event.getWhoClicked().getUniqueId())) {
+            if (item != null && LockItems.LockableItems.contains(item.getType())) {
+                if (DataManager.hasDataFromItem(item, LockItems.lock_owner) && DataManager.getDataFromItem(item, LockItems.lock_owner).equals(event.getWhoClicked().getUniqueId().toString())) {
                     event.setCancelled(true);
-                    event.getWhoClicked().sendMessage(configManager.getStringByKey("attempt_craft_locked_item", owner));
+                    event.getWhoClicked().sendMessage(ConfigManager.getStringByKey("attempt_craft_locked_item", Bukkit.getOfflinePlayer(DataManager.getDataFromItem(item, LockItems.lock_owner))));
                 }
             }
         }

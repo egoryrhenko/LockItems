@@ -1,5 +1,5 @@
 
-language: ru #only en, ru
+language: en #only en, ru
 
 ItemCanBeLock:
   - FILLED_MAP

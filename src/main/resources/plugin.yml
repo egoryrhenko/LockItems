@@ -22,5 +22,6 @@ commands:
     description: Unlock item in hand
   forceunlock:
     description: Unlock item in your hand, ignoring whether you are the one who locked item
-  lockitemsreload:
+  lockitems:
+    usage: lockitems reload
     description: Reload plugin

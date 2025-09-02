@@ -13,7 +13,6 @@ import org.ferrum.lockItems.commands.UnLockCommand;
 import org.ferrum.lockItems.listeners.CraftListener;
 import org.ferrum.lockItems.tabCompleters.EmptyTabCompleter;
 import org.ferrum.lockItems.utils.ConfigManager;
-import org.ferrum.lockItems.utils.DataManager;
 
 
 import java.util.HashSet;
@@ -47,7 +46,7 @@ public final class LockItems extends JavaPlugin {
         RegisterCommand("lock", lockCommand, emptyTabCompleter,"lockitems.lock");
         RegisterCommand("unlock", unLockCommand, emptyTabCompleter,"lockitems.unlock");
         RegisterCommand("forceunlock", forceUnLockCommand, emptyTabCompleter,"lockitems.unlock.admin");
-        RegisterCommand("lockitemsreload", reloadCommand, emptyTabCompleter,"lockitems.reload");
+        RegisterCommand("lockitems", reloadCommand, reloadCommand,"lockitems.reload");
     }
 
     private void RegisterCommand(String name, CommandExecutor commandExecutor, TabCompleter tabCompleter, String permission ) {

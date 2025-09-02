@@ -31,7 +31,7 @@ public class LockCommand implements CommandExecutor {
             if (LockItems.LockableItems.contains(itemInHand.getType())) {
                 ItemMeta meta = itemInHand.getItemMeta();
                 List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
-                String item_lore = ConfigManager.getStringByKey("item_lore").replace("{Player}", player.getName());
+                String item_lore = ConfigManager.getStringByKey("item_lore",player).replace("{Player}", player.getName());
                 if (!item_lore.isEmpty() && lore != null){
                     lore.add(ChatColor.RESET + item_lore);
                 }

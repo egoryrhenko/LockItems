@@ -9,7 +9,7 @@ permissions:
     default: true
   lockitems.unlock:
     default: true
-  lockitems.unlock.admin:
+  lockitems.forceunlock:
     default: op
   lockitems.reload:
     default: op

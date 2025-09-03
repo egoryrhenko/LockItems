@@ -12,7 +12,7 @@ attempt_unlock_item_not_in_list: "&cПредмет не заблокирован
 
 attempt_unlock_item_not_owner: "&cПредмет заблокирован не вами!"
 
-attempt_craft_locked_item: "&cЭтот предмет заблокирован игроком {Player}!"
+attempt_craft_locked_item: "&cЭтот предмет заблокирован игроком {Player}"
 
 item_lore: "&7Заблокировано игроком {Player}"
 

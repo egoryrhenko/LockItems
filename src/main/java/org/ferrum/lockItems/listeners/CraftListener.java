@@ -22,7 +22,7 @@ public class CraftListener implements Listener {
     public void onItemCraft(CraftItemEvent event) {
 
         for (ItemStack item : event.getInventory().getMatrix()) {
-            if (DataManager.hasDataFromItem(item, LockItems.lock_owner) && (!Objects.equals(DataManager.getDataFromItem(item, LockItems.lock_owner), event.getWhoClicked().getUniqueId().toString()))) {
+            if (notOwner(item, event.getWhoClicked().getUniqueId())) {
                 event.setCancelled(true);
                 event.getWhoClicked().sendMessage(ConfigManager.getStringByKey("attempt_craft_locked_item", DataManager.getItemOwner(item)));
             }
@@ -48,13 +48,16 @@ public class CraftListener implements Listener {
     public void onCartographyTableUse(InventoryClickEvent event) {
 
         Inventory inv = event.getClickedInventory();
-
-        if (inv != null && inv.getType() == InventoryType.CARTOGRAPHY) {
+        if (inv != null && inv.getType() == InventoryType.CARTOGRAPHY && event.getSlot() == 2) {
             ItemStack item = event.getCurrentItem();
-            if (DataManager.hasDataFromItem(item, LockItems.lock_owner) && Objects.equals(DataManager.getDataFromItem(item, LockItems.lock_owner), event.getWhoClicked().getUniqueId().toString())) {
+            if (notOwner(item, event.getWhoClicked().getUniqueId())) {
                 event.setCancelled(true);
                 event.getWhoClicked().sendMessage(ConfigManager.getStringByKey("attempt_craft_locked_item", DataManager.getItemOwner(item)));
             }
         }
+    }
+
+    private boolean notOwner(ItemStack item, UUID uuid) {
+        return DataManager.hasDataFromItem(item, LockItems.lock_owner) && !Objects.equals(DataManager.getDataFromItem(item, LockItems.lock_owner), uuid.toString());
     }
 }

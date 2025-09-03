@@ -51,7 +51,7 @@ public class ConfigManager {
         if (player != null && player.getName() != null) {
             string = string.replace("{Player}", player.getName());
         } else {
-            string = string.replace("{Player}","");
+            string = string.replace("{Player}","???");
         }
 
         if (PlaceholderAPI_isLoad) {

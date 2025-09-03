@@ -1,6 +1,5 @@
 package org.ferrum.lockItems.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,6 @@ import org.ferrum.lockItems.utils.ConfigManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.ferrum.lockItems.utils.DataManager.*;
 

@@ -45,7 +45,7 @@ public final class LockItems extends JavaPlugin {
 
         RegisterCommand("lock", lockCommand, emptyTabCompleter,"lockitems.lock");
         RegisterCommand("unlock", unLockCommand, emptyTabCompleter,"lockitems.unlock");
-        RegisterCommand("forceunlock", forceUnLockCommand, emptyTabCompleter,"lockitems.unlock.admin");
+        RegisterCommand("forceunlock", forceUnLockCommand, emptyTabCompleter,"lockitems.forceunlock");
         RegisterCommand("lockitems", reloadCommand, reloadCommand,"lockitems.reload");
     }
 

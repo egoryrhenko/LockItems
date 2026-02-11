@@ -11,5 +11,5 @@ LockItems is a plugin that lets players lock specific item crafting with the /lo
 ## Permissions
 - **lockitems.lock** (default: true) - access to command **/lock**
 - **lockitems.unlock** (default: true) - access to command **/unlock**
-- **lockitems.unlock.admin** (default: op) - access to command **/unlock**
+- **lockitems.forceunlock** (default: op) - access to command **/forceunlock**
 - **lockitems.reload** (default: op) - access to command **/lockitemsreload**
